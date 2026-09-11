@@ -13,16 +13,26 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Extract ZIP File
+      - name: Extract ZIP File & Move Files
         run: |
-          if [ -f "taj-ai-app.zip" ]; then
-            unzip -o taj-ai-app.zip
+          ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1)
+          if [ -n "$ZIP_FILE" ]; then
+            echo "Extracting $ZIP_FILE..."
+            unzip -o "$ZIP_FILE"
+          fi
+          if [ ! -f "package.json" ]; then
+            SUBDIR=$(find . -mindepth 2 -maxdepth 2 -name "package.json" | xargs dirname)
+            if [ -n "$SUBDIR" ]; then
+              echo "Moving files from $SUBDIR to root..."
+              mv $SUBDIR/* . 2>/dev/null || true
+              mv $SUBDIR/.* . 2>/dev/null || true
+            fi
           fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install Dependencies
         run: npm install
