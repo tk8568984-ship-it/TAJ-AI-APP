@@ -1,6 +1,0 @@
-{
-  "name": "TAJ AI - Personal Assistant",
-  "description": "TAJ AI: Advanced Personal AI Assistant with live screen vision, dual holographic orb, continuous hands-free voice loop, and phone system control.",
-  "requestFramePermissions": ["microphone", "camera", "display-capture"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
